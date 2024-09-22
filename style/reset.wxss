@@ -1,0 +1,6 @@
+switch.box[checked] .wx-switch-input,
+checkbox.box[checked] .wx-checkbox-input,
+radio.box[checked] .wx-radio-input {
+	background-color: var(--theme--) !important;
+	color: var(--white) !important;
+}

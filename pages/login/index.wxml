@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="header">
+    <image src="/asset/img/logo@2x.png" mode="aspectFit"></image>
+  </view>
+  <view class="login">
+    <view class="form">
+      <image src="/asset/img/用户.png" mode="aspectFit"></image>
+      <input id="stu" type="text" model:value="{{stuId}}" bindblur="getStuId" placeholder="请输入学号" />
+    </view>
+    <view class="text-form">
+      <view class="textError" wx:if="{{stuIdError}}">{{errorMsg}}</view>
+    </view>    
+    <view class="form">
+      <image src="/asset/img/分组 1-4.png" mode="aspectFit"></image>
+      <input type="password" model:value="{{password}}" bindblur="getPassword" placeholder="请输入密码" />
+    </view>
+    <view class="text-form">
+      <view class="textError" wx:if="{{passwordError}}">{{errorPasswordMsg}}</view>
+    </view>
+
+    <view bindtap="saveCheckBox" class="checkBox-form" >
+      <checkbox class="box" checked="{{save}}"/>
+      <view class="margin-left-sm" >记住账号密码(仅本地存储)</view>
+    </view>
+    
+
+    <button bind:tap="login" disabled="{{stuIdError || passwordError}}">登录</button>
+  </view>
+</view>
