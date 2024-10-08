@@ -1,66 +1,71 @@
-// pages/index/index.js
+const app = getApp()
+import {
+  getNowWeek
+} from '../../utils/util'
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    navList: [{
+        title: '查课表',
+        icon: '/asset/imgs/course.png',
+        path: '/pages/course/index'
+      },
+      {
+        title: '查成绩',
+        icon: '/asset/imgs/score.png',
+        path: '/pages/score/score'
+      },
+      {
+        title: '查考勤',
+        icon: '/asset/imgs/attendance.png',
+        path: '/pages/attendance/index'
+      },
+      {
+        title: '校历',
+        icon: '/asset/imgs/calendar.png',
+        path: '/pages/calendar/index'
+      },
+    ],
+    startDate: '2023/02/20', // 开学日期
+    totalWeek: 20,
+    todayCourseList: []
+  },
+  onLoad() {
+    this.getTodayCourseList()
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  nav(e) {
+    const index = e.currentTarget.dataset.index
+    const path = this.data.navList[index].path
+    wx.navigateTo({
+      url: path,
+      fail() {
+        wx.switchTab({
+          url: path,
+        })
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  getTodayCourseList() {
+    // const todayWeek = 2
+    // const todayWeeks = 15
+    const todayWeek = new Date().getDay()
+    const todayWeeks = getNowWeek(this.data.startDate, this.data.totalWeek)
+    const courseList = wx.getStorageSync('courses')
+    const todayCourseList=[]
+    if(courseList){
+      todayCourseList= courseList.filter(item => {
+        return item.week == todayWeek && item.weeks.indexOf(todayWeeks) > -1
+      })
+      todayCourseList.sort((a, b) => {
+        return a.section - b.section
+      })
+    }    
+    
+    this.setData({
+      todayWeek,
+      todayWeeks,
+      todayCourseList
+    })
   }
 })

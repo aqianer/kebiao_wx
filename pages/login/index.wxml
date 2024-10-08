@@ -1,17 +1,17 @@
 <view class="container">
   <view class="header">
-    <image src="/asset/img/logo@2x.png" mode="aspectFit"></image>
+    <image src="/asset/imgs/logo@2x.png" mode="aspectFit"></image>
   </view>
   <view class="login">
     <view class="form">
-      <image src="/asset/img/用户.png" mode="aspectFit"></image>
-      <input id="stu" type="text" model:value="{{stuId}}" bindblur="getStuId" placeholder="请输入学号" />
+      <image src="/asset/imgs/用户.png" mode="aspectFit"></image>
+      <input id="stu" type="text" model:value="{{stuId}}" bindblur="getStuId" placeholder="请输入学号" required/>
     </view>
     <view class="text-form">
       <view class="textError" wx:if="{{stuIdError}}">{{errorMsg}}</view>
     </view>    
     <view class="form">
-      <image src="/asset/img/分组 1-4.png" mode="aspectFit"></image>
+      <image src="/asset/imgs/分组 1-4.png" mode="aspectFit"></image>
       <input type="password" model:value="{{password}}" bindblur="getPassword" placeholder="请输入密码" />
     </view>
     <view class="text-form">

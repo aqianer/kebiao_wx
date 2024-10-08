@@ -27,6 +27,10 @@ Component({
       type: String,
       default: ''
     },
+    customBack: {
+      type: [Boolean, String],
+      default: true
+    },
   },
   /**
    * 组件的初始数据
@@ -41,11 +45,15 @@ Component({
    */
   methods: {
     BackPage() {
+      if (this.properties.customBack) {
+        this.triggerEvent('back')
+        return
+      }
       wx.navigateBack({
         delta: 1
       });
     },
-    toHome(){
+    toHome(){      
       wx.reLaunch({
         url: '/pages/index/index',
       })

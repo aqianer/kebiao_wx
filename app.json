@@ -3,15 +3,49 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/login/login",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/score/score",
+    "pages/mine/index",
+    "pages/course/index"
+
   ],
   "window": {
-    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light",
     "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
   },
-
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "usingComponents": {
+    "cu-custom": "/style/colorui/components/cu-custom"
+  },
+  "componentFramework": "glass-easel",  
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "color": "#9E9E9E",
+    "selectedColor": "#444444",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "text": "首页",
+        "iconPath": "/asset/tabbar_icon/index.png",
+        "selectedIconPath": "/asset/tabbar_icon/index_active.png",
+        "pagePath": "pages/index/index"
+      },
+      {
+        "text": "课程",
+        "iconPath": "/asset/tabbar_icon/course.png",
+        "selectedIconPath": "/asset/tabbar_icon/course_active.png",
+        "pagePath": "pages/course/index"
+      },
+      {
+        "text": "我的",
+        "iconPath": "/asset/tabbar_icon/mine.png",
+        "selectedIconPath": "/asset/tabbar_icon/mine_active.png",
+        "pagePath": "pages/mine/index"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

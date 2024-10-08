@@ -9,6 +9,17 @@
     "miniprogram": {
       "list": [
         {
+          "name": "成绩",
+          "pathName": "pages/score/score",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
           "name": "dl",
           "pathName": "pages/login/index",
           "query": "",

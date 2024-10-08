@@ -1,6 +1,10 @@
 // pages/login/index.js
+import {
+  loginRequest
+} from "../../api/main.js"
+
 Page({
-  
+
   /**
    * 页面的初始数据
    */
@@ -11,20 +15,20 @@ Page({
     errorMsg: '账号密码不为空',
     passwordError: false,
     errorPasswordMsg: '密码小于6位',
-    save:true,
-    
+    save: true,
+
   },
 
   // 在输入框为输入状态时，会触发bindinput绑定的getData事件
   getStuId(e) {
     let value = e.detail.value
-    
-    
+
+
     if (value == '') {
       // $("#stu").css('borderColor','red')
       this.data.stuIdError = true;
-      
-    }else{
+
+    } else {
       this.data.stuIdError = false;
     }
     this.setData({
@@ -35,7 +39,7 @@ Page({
     let value = e.detail.value
     if (value.length < 6) {
       this.data.passwordError = true;
-    }else{
+    } else {
       this.data.passwordError = false;
     }
     this.setData({
@@ -43,31 +47,25 @@ Page({
     })
   },
 
-  changeColor(e){
+  saveCheckBox() {
     this.setData({
-      defalutBorderColor:"#f83434"
+      save: !this.data.save
     })
-  },
-
-  saveCheckBox(){
-    this.setData({
-      save:!this.data.save
-    })    
   },
 
   login() {
     // 地址指向问题
-    const that=this
+    const that = this
     // 发post请求到后端服务器
     const loginData = {
       stuId: that.data.stuId,
       password: that.data.password
     }
     // 判断是否空表单数据不允许发送请求
-    if(loginData.stuId==''|| loginData.password==''){
+    if (loginData.stuId == '' || loginData.password == '') {
       wx.showToast({
         title: '请输入学号或密码',
-        icon:'none'
+        icon: 'none'
       })
       return
     }
@@ -75,58 +73,54 @@ Page({
     //   title:'登录中',
     //   icon:'loading'
     // })
-    wx.request({
-      url: "http://localhost:3000/login",
-      data: loginData,
-      method: 'POST',
-      success(res) {
-        console.log(res)
-        if (res.data.code == 0) {
-          // 将成功返回的token存储到本地
-          wx.setStorageSync('token', res.data.data.cookie)
-          // 是否记住账号密码
-          if(that.data.save){
-            wx.setStorageSync('account', loginData)
-          }else{
-            wx.removeStorage({
-              key: 'account',
-            })
-          }          
-          wx.showToast({
-            title: '登录成功',
-            icon: 'success'
-          })
-          // 跳转页面
-          
+    loginRequest(loginData).then(res => {
+      console.log(res)
+      if (res.code == 0) {
+        // 将成功返回的token存储到本地
+        wx.setStorageSync('token', res.data.cookie)
+        // 是否记住账号密码
+        if (that.data.save) {
+          wx.setStorageSync('account', loginData)
         } else {
-          // 登录失败的场景
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'error'
+          wx.removeStorage({
+            key: 'account',
           })
         }
-
+        // 跳转页面
+        // 成功则跳转页面
+        setTimeout(() => {
+          wx.reLaunch({
+            url: '/pages/index/index',
+          })
+        }, 500)
+        wx.showToast({
+          title: '登录成功',
+          icon: 'success'
+        })
+      } else {
+        // 登录失败的场景
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'error'
+        })
       }
     })
-    // 根据响应的结果去展示提示框
-
-    // 成功则跳转页面
-    setTimeout(()=>{
-      wx.redirectTo({
-        url: '/pages/index/index',
-      })
-    },1500)
-      
+    // wx.request({
+    //   url: "http://localhost:3000/login",
+    //   data: loginData,
+    //   method: 'POST',
+    //   success(res) {}
+    // })
 
   },
 
-  init(){
+  init() {
     const accountCache = wx.getStorageSync('account')
-    if(accountCache){
+    if (accountCache) {
       this.setData({
         ...accountCache
       })
-    }    
+    }
   },
 
   /**

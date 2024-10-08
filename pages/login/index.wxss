@@ -3,13 +3,15 @@ page {
   --defalutBorderColor--: #666
 }
 
+
+
 .login {
   padding: 30rpx;
 }
 .header{
   display: flex;
   justify-content: center;
-  margin-top: 106rpx;
+  margin-top: 200rpx;
   margin-bottom: 30rpx;
 }
 .header image{
@@ -17,9 +19,7 @@ page {
   height: 176rpx;
 }
 
-.form input{
-  
-}
+
 
 
 
@@ -34,10 +34,18 @@ page {
   color: #ffffff;
 }
 
+.form input:invalid {
+  border: 2rpx dashed red;
+}
+
+.form input:valid {
+  border: 2px solid black;
+}
+
 .form{
   height: 98rpx ;
   border-radius: 60rpx;
-  border: 1rpx solid var(--defalutBorderColor--);  
+  
   margin-bottom: 20rpx;
   opacity: 1;
   padding: 20rpx;
